@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>我的博客</title><description>记录与分享</description><link>https://duanzanjiu.github.io/blog/</link><language>zh_CN</language><item><title>博客示范</title><link>https://duanzanjiu.github.io/blog/posts/guide/</link><guid isPermaLink="true">https://duanzanjiu.github.io/blog/posts/guide/</guid><description>描述一下博客的使用方法</description><pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Welcome to &lt;strong&gt;Shirone&lt;/strong&gt; (白音) — an expressive, anime-inspired blog theme crafted around &lt;strong&gt;Astro 7&lt;/strong&gt;, &lt;strong&gt;Svelte 5&lt;/strong&gt;, and the &lt;strong&gt;Material 3 Expressive (M3E)&lt;/strong&gt; design system.&lt;/p&gt;
+&lt;p&gt;This guide walks you through post creation, frontmatter specifications, directory structure, and the full suite of built-in Markdown and MDX extensions.&lt;/p&gt;
+&lt;p&gt;:::tip
+Shirone renders content server-side first (SSR-first). When navigating within the site, Swup seamlessly swaps the main container while preserving the outer application shell and continuous music playback.
+:::&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;1. Creating a New Post&lt;/h2&gt;
+&lt;p&gt;You can quickly scaffold a new post with standard frontmatter using the built-in CLI command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Create a single-file post
+pnpm new-post my-first-post
+
+# Or create a post in a sub-directory
+pnpm new-post guides/getting-started
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The newly created file will be placed in &lt;code&gt;src/content/posts/&lt;/code&gt;.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;2. Frontmatter Specification&lt;/h2&gt;
+&lt;p&gt;Every Markdown (&lt;code&gt;.md&lt;/code&gt;) or MDX (&lt;code&gt;.mdx&lt;/code&gt;) post starts with a YAML frontmatter block defining its metadata.&lt;/p&gt;
+&lt;h3&gt;Example&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;---
+title: &quot;Exploring Material 3 Expressive Design&quot;
+published: 2026-08-26
+updated: 2026-08-27
+publishedAt: 2026-08-26T10:00:00+08:00
+updatedAt: 2026-08-27T09:30:00+08:00
+pinned: true
+description: &quot;A deep dive into dynamic HCT color science and fluid transitions in Shirone.&quot;
+image: &quot;./cover.webp&quot;
+tags: [M3E, Design, Frontend]
+category: Guides
+draft: false
+comment: true
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Supported Frontmatter Fields&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Field&lt;/th&gt;
+&lt;th&gt;Type&lt;/th&gt;
+&lt;th&gt;Required&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;title&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;string&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;Yes&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;The main title of the post.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;published&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;Date&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;Yes&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Publication date in &lt;code&gt;YYYY-MM-DD&lt;/code&gt; format.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;publishedAt&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;Date&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;Precise publication instant used to order posts published on the same day. It must fall on &lt;code&gt;published&lt;/code&gt; in the configured site time zone.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;updated&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;Date&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;Last updated date. When provided, an update notice badge is displayed.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;updatedAt&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;Date&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;Precise update instant used by feeds and machine-readable metadata. It must be paired with &lt;code&gt;updated&lt;/code&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;pinned&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boolean&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;Pin the post to the top of article lists (default: &lt;code&gt;false&lt;/code&gt;).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;description&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;string&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;Post summary displayed in article cards, search results, and OpenGraph metadata.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;image&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;string&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;Cover image path. Supports relative (&lt;code&gt;./cover.webp&lt;/code&gt;), public (&lt;code&gt;/images/cover.jpg&lt;/code&gt;), or remote URLs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;tags&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;string[]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;Array of tag names for taxonomy filtering and tag clouds.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;category&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;string&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;Primary category name for taxonomy indexing.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;draft&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boolean&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;Mark as draft. Draft posts are hidden during production build (&lt;code&gt;pnpm build&lt;/code&gt;).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;comment&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boolean&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;Toggle comment section for this specific post (default: &lt;code&gt;true&lt;/code&gt;).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;lang&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;string&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;Language code (e.g. &lt;code&gt;en&lt;/code&gt;, &lt;code&gt;zh_CN&lt;/code&gt;, &lt;code&gt;ja&lt;/code&gt;) if different from site default.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;h2&gt;3. Post Encryption&lt;/h2&gt;
+&lt;p&gt;Shirone provides client-side post encryption. This is a static password gate, not server-side access control: the encrypted payload and asset URLs remain publicly downloadable, so do not use it for genuinely confidential files or regulated secrets. For private journals or restricted articles, specify a password in frontmatter:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+title: &quot;Private Research Notes&quot;
+published: 2026-08-26
+encrypted: true
+password: &quot;your-secret-passphrase&quot;
+passwordHint: &quot;Favorite anime character&quot;
+hideHomeContent: true
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;encrypted&lt;/code&gt;: Set to &lt;code&gt;true&lt;/code&gt; to enable encryption;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;password&lt;/code&gt;: Passphrase string or number required to unlock the post;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;passwordHint&lt;/code&gt;: Optional hint shown above the password entry form;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hideHomeContent&lt;/code&gt;: Hide word counts and content previews on the homepage to prevent data leakage.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h2&gt;4. Organizing Post Files&lt;/h2&gt;
+&lt;p&gt;Shirone supports both folder-based co-location and single-file layouts:&lt;/p&gt;
+&lt;h3&gt;Folder Structure (Recommended for Local Assets)&lt;/h3&gt;
+&lt;p&gt;Co-locating your post and its media makes asset management straightforward:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;src/content/posts/
+├── my-great-post/
+│   ├── index.md           &amp;lt;-- Post content
+│   ├── cover.webp         &amp;lt;-- Cover image (image: &quot;./cover.webp&quot;)
+│   └── diagram.png        &amp;lt;-- Inline illustration referenced in markdown
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Single-File Structure (Lightweight Prose)&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;src/content/posts/
+├── hello-world.md
+└── quick-thoughts.md
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h2&gt;5. Rich Markdown &amp;amp; MDX Extensions&lt;/h2&gt;
+&lt;p&gt;Shirone includes modern Markdown extensions out of the box:&lt;/p&gt;
+&lt;h3&gt;5.1 Admonitions&lt;/h3&gt;
+&lt;p&gt;Use container directives for notes, tips, warnings, and alerts:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;:::tip
+Use admonition containers to highlight key takeaways or best practices.
+:::
+
+:::warning
+Use warning containers to signal potential pitfalls or breaking changes.
+:::
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;5.2 GitHub Repository Cards&lt;/h3&gt;
+&lt;p&gt;Embed live, beautifully styled GitHub repository cards using the directive syntax:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;::github{repo=&quot;LyraVoid/Shirone&quot;}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;::github{repo=&quot;LyraVoid/Shirone&quot;}&lt;/p&gt;
+&lt;h3&gt;5.3 Expressive Code Blocks&lt;/h3&gt;
+&lt;p&gt;Enhanced code blocks feature syntax highlighting, file name badges, line numbers, and selective line highlighting:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;// Dynamic HCT color token derivation
+import { argbFromHex, themeFromSourceColor } from &quot;@material/material-color-utilities&quot;;
+
+const theme = themeFromSourceColor(argbFromHex(&quot;#f472b6&quot;));
+console.log(&quot;Primary color token:&quot;, theme.schemes.light.primary);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;5.4 Mathematical Typesetting (KaTeX)&lt;/h3&gt;
+&lt;p&gt;Render elegant LaTeX mathematical notation directly in Markdown:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Inline math&lt;/strong&gt;: $E = mc^2$ or Euler&apos;s formula $e^{i\pi} + 1 = 0$.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Block math&lt;/strong&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;$$
+\int_{-\infty}^{\infty} e^{-x^2} , dx = \sqrt{\pi}
+$$&lt;/p&gt;
+&lt;h3&gt;5.5 Mermaid Diagrams&lt;/h3&gt;
+&lt;p&gt;Create flowcharts, sequence diagrams, and architecture maps using plain text:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sequenceDiagram
+    autonumber
+    actor Visitor as Visitor
+    participant Page as Shirone Page
+    participant Swup as Swup Container
+    participant Audio as Persistent Shell
+
+    Visitor-&amp;gt;&amp;gt;Page: Click Navigation Link
+    Page-&amp;gt;&amp;gt;Swup: Trigger Seamless Transition
+    Swup-&amp;gt;&amp;gt;Page: Replace #swup-container
+    Note over Audio: Background music plays continuously
+    Page--&amp;gt;&amp;gt;Visitor: New Page Rendered
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;5.6 Image Galleries &amp;amp; Fancybox Lightbox&lt;/h3&gt;
+&lt;p&gt;Images automatically integrate with Fancybox for lossless zoom, pan gestures, and full-screen preview:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;![Cover preview](./cover.jpeg)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h2&gt;6. Next Steps &amp;amp; Customization&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Site Configuration&lt;/strong&gt;: Learn about global settings in &lt;code&gt;src/config/siteConfig.ts&lt;/code&gt; and &lt;a href=&quot;https://github.com/LyraVoid/Shirone/blob/main/src/config/README.md&quot;&gt;&lt;code&gt;src/config/README.md&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Design Tokens&lt;/strong&gt;: Explore tokens and color palettes in &lt;code&gt;DESIGN.md&lt;/code&gt; and &lt;code&gt;docs/m3e-standard.md&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Feedback &amp;amp; Community&lt;/strong&gt;: Share your ideas and questions on &lt;a href=&quot;https://github.com/LyraVoid/Shirone/issues&quot;&gt;GitHub Issues&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded></item></channel></rss>

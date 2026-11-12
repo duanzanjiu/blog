@@ -1,0 +1,16 @@
+# 我的博客
+
+> 记录与分享
+
+This is the llms.txt file for 我的博客. It provides a machine-readable directory of published articles and core pages for Large Language Models.
+
+## Core Pages
+- [Home](https://duanzanjiu.github.io/blog/): Main blog entrance and latest post stream.
+- [About](https://duanzanjiu.github.io/blog/about/): Author profile, technical stack, and background.
+- [Archive](https://duanzanjiu.github.io/blog/archive/): Chronological index of all published writings.
+
+## Articles
+- [博客示范](https://duanzanjiu.github.io/blog/blog/posts/guide/): 描述一下博客的使用方法
+
+## Full Text Dump
+- [Full Text Archive](https://duanzanjiu.github.io/blog/llms-full.txt): Complete, concatenated Markdown content of all public articles for full-context ingestion.
