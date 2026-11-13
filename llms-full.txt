@@ -1,6 +1,6 @@
 # 我的博客 - Full Content Archive
 
-> Generated on 2026-11-12. Contains full text of all public articles for LLM ingestion.
+> Generated on 2026-11-13. Contains full text of all public articles for LLM ingestion.
 
 ---
 
